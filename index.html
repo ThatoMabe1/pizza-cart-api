@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pizza_Cart_API</title>
+  <script src="//unpkg.com/alpinejs" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.0/dist/alpine.js" defer></script>
+  <script src="index.js" ></script>
+  
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body class="body">
+    <div x-data="cart">
+        <h1 x-text="title"></h1>
+        <div class="cart" x-cloak>
+
+            <div class="text">
+                <div>
+                    Username:<input type="text" x-model="username" >
+                    <button x-on:click="login" x-show="!loggedIn" class="button" style="border-radius: 20px; background-color: rgba(255, 153, 37, 0.63); color: rgb(10, 8, 8);" x-on:click="addPizzaToCart(pizza.id)">login</button>
+                    <button x-on:click="logout" x-show="loggedIn" class="button" style="border-radius: 20px; background-color: rgba(255, 153, 37, 0.63); color: rgb(10, 8, 8);" x-on:click="addPizzaToCart(pizza.id)">logout</button>
+                    
+                    <!-- <a href="history.html" style="border-radius: 20px; color: rgb(10, 8, 8);"  x-show="username">History</a> -->
+
+                </div><br>
+                <br>
+                <div x-show="cartId">
+                    Code : <span x-text="cartId"></span><br><br>
+                    Pizzas available: <strong x-text="pizzas.length" x-show="username  && cartId"></strong>
+                </div>
+            </div>
+
+    <br>
+    <div x-show="cartTotal>0">
+
+      <h2>Pizza cart</h2>
+      <div x-text="message">Message</div>
+      
+      <table class="message">
+
+        <td><img x-bind:src="pizza.size"></td>
+        
+        <tr>
+          <th>Flavour</th>
+              <th>Size</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Total</th>
+            </tr>
+            <template x-for="pizza in cartPizzas">
+              <tr>
+                <td x-text="pizza.flavour"></td>
+                <td x-text="pizza.size"></td>
+                <td x-text="pizza.price"></td>
+                
+                  <td>
+                      <button x-on:click="addPizzaToCart(pizza.id)" style="text-align: center;">+</button>
+                      X<span x-text="pizza.qty" style="text-align: center;"></span>
+                      <button x-on:click="removePizzaFromCart(pizza.id)"
+                          style="text-align: center;">-</button>
+                  </td>
+                  <td x-text="pizza.total.toFixed(2)" style="text-align: right;"></td>
+              </tr>
+          </template>
+          <tr>
+              <td colspan="3">Total</td>
+              <td colspan="3" style="text-align: right;">R<span x-text="cartTotal"></span></td>
+          </tr>
+          <tr>
+              <td colspan="3">Pay now</td>
+              <td>
+                  <input x-model="paymentAmount" type="text">
+              </td>
+              <td>
+                  <button x-on:click="payForCart()"> Add Payment</button>
+              </td>
+          </tr>
+      </table>
+  </div>
+</div>
+
+
+  <div  x-show="loggedIn">
+    
+   <template x-for="pizza in pizzas">
+    <template x-if="pizza.size == 'small'">
+        <div  class="pizzas">
+            <h5 x-text="pizza.flavour"></h5>
+            <span x-text="pizza.size"></span>@
+            <strong>
+                R<span x-text="pizza.price"></span>
+            </strong>
+            <span><img src="/img/pizza.png" width="150"></span>
+            <div>
+                <button class="button" style="border-radius: 20px; background-color: rgba(255, 153, 37, 0.63); color: rgb(10, 8, 8);" x-on:click="addPizzaToCart(pizza.id)">Add to cart</button>
+            </div>
+        </div>
+    </template>
+   </template>
+  
+  
+   <template x-for="pizza in pizzas">
+    <template x-if="pizza.size=='medium'">
+        <div class="pizzas">
+            <h5 x-text="pizza.flavour"></h5>
+            <span x-text="pizza.size"></span>@
+            <strong>
+                R<span x-text="pizza.price"></span>
+            </strong>
+            <span><img src="/img/pizza.png" width="150"></span>
+            <div>
+                <button class="button" style="border-radius: 20px; background-color: rgba(255, 153, 37, 0.63); color: rgb(10, 8, 8);" x-on:click="addPizzaToCart(pizza.id)">Add to cart</button>
+            </div>
+        </div>
+    </template>
+   </template>
+  
+   <template x-for="pizza in pizzas">
+    <template x-if="pizza.size=='large'">
+        <div class="pizzas">
+            <h5 x-text="pizza.flavour"></h5>
+            <span x-text="pizza.size"></span>@
+            <strong>
+                R<span x-text="pizza.price"></span>
+            </strong>
+            <span><img src="/img/pizza.png" width="150"></span>
+            <div>
+                <button class="button" style="border-radius: 20px; background-color: rgba(255, 153, 37, 0.63); color: rgb(10, 8, 8);" x-on:click="addPizzaToCart(pizza.id)">Add to cart</button>
+            </div>
+        </div>
+</div>
+
+  </template>
+ </template>
+</div>
+
+</div>
+</body>
+
+</html>
