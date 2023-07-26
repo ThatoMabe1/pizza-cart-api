@@ -11,6 +11,7 @@ document.addEventListener('alpine:init', () => {
             message: '',
             loggedIn: false,
             userHistory: '',
+            openHistory: '',
             login() {
                 if (this.username.length > 1) {
                     localStorage['username'] = this.username;
